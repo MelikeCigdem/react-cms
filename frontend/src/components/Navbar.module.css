@@ -1,0 +1,75 @@
+.link{
+    text-decoration: none;
+    color: #fff;
+}
+.aksam {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #0667d0 ;
+    margin-right: 6px;
+}
+.star {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #d0011b ;
+    margin-right: 6px;
+}
+.gunes {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #ffc134 ;
+    margin-right: 6px;
+}
+.gazete {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #3952b2 ;
+    margin-right: 6px;
+}
+.alem {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #f31f65;
+    margin-right: 6px;
+}
+.platin {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #5c7d8a;
+    margin-right: 6px;
+}
+.qcore {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #cddc4d;
+    margin-right: 6px;
+}
+.tmsavunma {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #7c554a;
+    margin-right: 6px;
+}
+.yirmidorthaber {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color:  #f29900;
+    margin-right: 6px;
+}
+
+.navbar {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+}
