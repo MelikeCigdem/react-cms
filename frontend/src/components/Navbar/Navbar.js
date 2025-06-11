@@ -1,35 +1,5 @@
-// import styles from './Navbar.module.css';
-// import AppBar  from '@mui/material/AppBar';
-// import Box  from '@mui/material/Box';
-// import Typography  from '@mui/material/Typography';
-// import Toolbar  from '@mui/material/Toolbar';
-// import Button  from '@mui/material/Button';
-// import { Link } from 'react-router-dom';
 
-// export default function Navbar(){
-//     return(
-//         <Box sx={{flexGrow:1}}>
-//             <AppBar position='static' color='primary'>
-//                 <Toolbar>
-//                     <Typography variant='h6' component='div' sx={{flexGrow:1}}>
-//                         <Link component='button' to='/' className={styles.link}>Harcama Takip App</Link>
-//                     </Typography>
-
-//                         <Button variant='outlined' color='inherit'>
-//                             <Link component='button' className={styles.link} to='/login'>GİRİŞ</Link>
-//                         </Button>
-
-//                         <Typography variant='caption'>
-//                            Merhaba Melike ÇİĞDEM
-//                         </Typography>
-
-
-//                 </Toolbar>
-//             </AppBar>
-//         </Box>
-//     )
-// }
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -37,16 +7,12 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Logo from "../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ShareIcon from '@mui/icons-material/Share';
@@ -54,9 +20,10 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddIcon from '@mui/icons-material/Add';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import { useSelectedBrand } from "../context/SelectedBrandContext";
-import brandColors from '../constants/brandColors';
-import styles from './Navbar.module.css';
+import { useSelectedBrand } from "../../context/SelectedBrandContext";
+import brandColors from '../../constants/brandColors';
+import styles from './Navbar.module.scss';
+import FilterWeb from './FilterWeb';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -103,12 +70,28 @@ export default function PrimarySearchAppBar() {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [auth, setAuth] = React.useState(true);
     const { selectedBrand, setSelectedBrand } = useSelectedBrand();
-    const [trSelectedBrand, setTRSelectedBrand]  = React.useState("Akşam")
+    const [trSelectedBrand, setTRSelectedBrand] = React.useState("Akşam")
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-     const currentColor = brandColors[selectedBrand] || '#1976d2';
+    const currentColor = brandColors[selectedBrand] || '#1976d2';
+    // filter
+    const [simpleOpen, setSimpleOpen] = React.useState(false);
 
+    const handleClickOpen = () => {
+        setSimpleOpen(true);
+    };
+
+    const handleClickClose = () => {
+        setSimpleOpen(false);
+    };
+
+    useEffect(() => {
+        console.log("simpleOpen", simpleOpen);
+        
+     }, [simpleOpen])
+        
+    // filter end
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -120,8 +103,8 @@ export default function PrimarySearchAppBar() {
     const handleMenuClose = (brand, trBrand) => {
         setAnchorEl(null);
         handleMobileMenuClose();
-        if(brand) setSelectedBrand(brand);
-        if(trBrand) setTRSelectedBrand(trBrand);
+        if (brand) setSelectedBrand(brand);
+        if (trBrand) setTRSelectedBrand(trBrand);
     };
 
     const handleMobileMenuOpen = (event) => {
@@ -187,25 +170,48 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
+            <MenuItem onClick={handleClickOpen}>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit"  >
+                    <FilterListIcon />
+                    
                 </IconButton>
-                <p>Messages</p>
+                <p>Filtrele</p>
             </MenuItem>
             <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                    <TrendingUpIcon />
                 </IconButton>
-                <p>Notifications</p>
+                <p>Trend</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                    <ShareIcon />
+                </IconButton>
+                <p>Paylaş</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                    <InsertPhotoIcon />
+                </IconButton>
+                <p>Fotoğraflar</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                    <VisibilityIcon />
+                </IconButton>
+                <p>Work And Travel</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                    <AddIcon />
+                </IconButton>
+                <p>Yeni Sekme</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                    <ContactSupportIcon />
+                </IconButton>
+                <p>Destek</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -226,16 +232,6 @@ export default function PrimarySearchAppBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: currentColor }}>
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-
                     <img
                         style={{ width: 36, height: 48 }}
                         srcSet={`${Logo}`}
@@ -248,43 +244,49 @@ export default function PrimarySearchAppBar() {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            sx={{ width: "400px" }}
+                            // sx={{ width: "400px" }}
                             placeholder="Yayınlanmış Haberleri Ara"
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <FilterListIcon />
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <TrendingUpIcon />
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <ShareIcon />
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <InsertPhotoIcon />
-                    </IconButton>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        {/* web */}
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleClickOpen}
+                        >
+                            <FilterListIcon />
+                        </IconButton>
+                        
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                        >
+                            <TrendingUpIcon />
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                        >
+                            <ShareIcon />
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                        >
+                            <InsertPhotoIcon />
+                        </IconButton>
+                    </Box>
+
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
@@ -337,24 +339,6 @@ export default function PrimarySearchAppBar() {
                                     {trSelectedBrand}
                                 </Typography>
                             </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
-                            </Menu>
                         </div>
 
 
@@ -373,6 +357,7 @@ export default function PrimarySearchAppBar() {
                     </Box>
                 </Toolbar>
             </AppBar>
+            <FilterWeb  open={simpleOpen} onClose={() => setSimpleOpen(false)} />
             {renderMobileMenu}
             {renderMenu}
         </Box>

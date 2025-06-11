@@ -4,7 +4,6 @@ import { Container, Grid, Paper } from '@mui/material';
 
 export default function Home(){
       const { selectedBrand } = useSelectedBrand();
-      console.log("selectedBrand",selectedBrand);
       
     return(
         <Container sx={{mt:8}}>

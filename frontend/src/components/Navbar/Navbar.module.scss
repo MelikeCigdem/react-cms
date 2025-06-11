@@ -1,0 +1,180 @@
+.link {
+    text-decoration: none;
+    color: #fff;
+}
+
+.aksam {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #0667d0;
+    margin-right: 6px;
+}
+
+.star {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #d0011b;
+    margin-right: 6px;
+}
+
+.gunes {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #ffc134;
+    margin-right: 6px;
+}
+
+.gazete {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #3952b2;
+    margin-right: 6px;
+}
+
+.alem {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #f31f65;
+    margin-right: 6px;
+}
+
+.platin {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #5c7d8a;
+    margin-right: 6px;
+}
+
+.qcore {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #cddc4d;
+    margin-right: 6px;
+}
+
+.tmsavunma {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #7c554a;
+    margin-right: 6px;
+}
+
+.yirmidorthaber {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    background-color: #f29900;
+    margin-right: 6px;
+}
+
+.navbar {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s ease;
+}
+
+.datePicker {
+    input {
+        width: 520px;
+        padding: 18px 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        margin-bottom: 20px;
+
+        &:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+            outline: none;
+        }
+
+        &::placeholder {
+            color: #aaa;
+        }
+    }
+
+    @media (max-width: 768px) {
+        input {
+            padding: 14px 12px;
+            font-size: 0.95rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        input {
+            width: 294px;
+        }
+    }
+
+    .react-datepicker {
+        border: none;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.9rem;
+
+        &__header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        &__current-month {
+            font-weight: 600;
+            color: #333;
+        }
+
+        &__day-names {
+            display: flex;
+            justify-content: space-around;
+            color: #999;
+        }
+
+        &__day {
+            margin: 0.3rem;
+            width: 2.2rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            text-align: center;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: #e0f0ff;
+            }
+
+            &--selected {
+                background-color: #007bff;
+                color: white;
+            }
+
+            &--in-selecting-range,
+            &--in-range {
+                background-color: #d6eaff;
+                color: #004085;
+            }
+
+            &--today {
+                border: 1px solid #007bff;
+            }
+        }
+
+        &__day--disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+    }
+}
