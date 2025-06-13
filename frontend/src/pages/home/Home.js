@@ -1,9 +1,9 @@
 import { useSelectedBrand } from '../../context/SelectedBrandContext';
 import './Home.module.css';
 import { Grid } from '@mui/material';
-import SectionOne from './SectionOne';
 import SectionTwo from './SectionTwo';
 import SectionThree from './SectionThree';
+import SectionOne from './SectionOne/SectionOne';
 
 export default function Home() {
     //   const { selectedBrand } = useSelectedBrand();

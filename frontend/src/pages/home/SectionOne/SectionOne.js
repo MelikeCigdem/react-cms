@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Home.module.css';
+import '../Home.module.css';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -16,6 +16,7 @@ import AccessAlarmSharpIcon from '@mui/icons-material/AccessAlarmSharp';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Badge, Tooltip } from '@mui/material';
+import AgencyNews from './Tabs/AgencyNews';
 
 
 function CustomTabPanel(props) {
@@ -29,7 +30,7 @@ function CustomTabPanel(props) {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
         </div>
     );
 }
@@ -55,7 +56,7 @@ export default function SectionOne() {
     };
 
     return (
-        <Box sx={{}}>
+        <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 1, gap: 20 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -118,11 +119,10 @@ export default function SectionOne() {
                     </IconButton>
 
                 </Box>
-
             </Box>
 
             <CustomTabPanel value={value} index={0}>
-                Item One
+                <AgencyNews />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 Item Two
