@@ -7,14 +7,11 @@ export default function AgencyNews() {
     <Box sx={{ flexGrow: 1 }}>
       <Grid
         container
+        spacing={2} 
         sx={{
           '--Grid-borderWidth': '1px',
-          borderTop: 'var(--Grid-borderWidth) solid',
-          borderLeft: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
           '& > div': {
-            borderRight: 'var(--Grid-borderWidth) solid',
-            borderBottom: 'var(--Grid-borderWidth) solid',
+            border: 'var(--Grid-borderWidth) solid',
             borderColor: 'divider',
           },
         }}
@@ -27,9 +24,11 @@ export default function AgencyNews() {
               xs: 12,
               sm: 6,
               md: 4,
-              lg: 3,
+              lg: 4,
             }}
-          />
+          >
+            Melike
+          </Grid>
         ))}
       </Grid>
     </Box>
