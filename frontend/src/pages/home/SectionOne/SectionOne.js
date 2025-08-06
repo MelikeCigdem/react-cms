@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
-import '../Home.module.css';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import PodcastsIcon from '@mui/icons-material/Podcasts';
-import PersonIcon from '@mui/icons-material/Person';
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import InsightsIcon from '@mui/icons-material/Insights';
-import AccessAlarmSharpIcon from '@mui/icons-material/AccessAlarmSharp';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import { Badge, Tooltip } from '@mui/material';
+import '../Home.module.css';
+import {
+    Box,
+    Tabs,
+    Tab,
+    IconButton,
+    Badge,
+    Tooltip,
+    FormControl,
+    Select,
+    MenuItem,
+} from '@mui/material';
+import {
+    ExitToApp as ExitToAppIcon,
+    Podcasts as PodcastsIcon,
+    Person as PersonIcon,
+    FormatListNumbered as FormatListNumberedIcon,
+    CameraAlt as CameraAltIcon,
+    Videocam as VideocamIcon,
+    Insights as InsightsIcon,
+    AccessAlarmSharp as AccessAlarmSharpIcon,
+    FormatListBulleted as FormatListBulletedIcon,
+    Refresh as RefreshIcon,
+} from '@mui/icons-material';
+
 import AgencyNews from './Tabs/AgencyNews';
+import OnAirNews from './Tabs/OnAirNews';
+import MyNews from './Tabs/MyNews';
+import SortingNews from './Tabs/SortingNews';
 
-
-function CustomTabPanel(props) {
-    const { children, value, index, ...other } = props;
-
+function CustomTabPanel({ children, value, index }) {
     return (
         <div
             role="tabpanel"
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            {...other}
         >
             {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
         </div>
@@ -41,110 +49,128 @@ CustomTabPanel.propTypes = {
     value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-export default function SectionOne() {
+const tabIcons = [
+    { icon: <ExitToAppIcon fontSize="small" />, title: 'Ajans Haberleri' },
+    { icon: <PodcastsIcon fontSize="small" />, title: 'Yayındaki Haberler' },
+    { icon: <PersonIcon fontSize="small" />, title: 'Benim Haberlerim' },
+    { icon: <FormatListNumberedIcon fontSize="small" />, title: 'Haberleri Sıralama' },
+    { icon: <CameraAltIcon fontSize="small" />, title: 'Fotoğraf Yükle' },
+    { icon: <VideocamIcon fontSize="small" />, title: 'Video veya Mp3 Yükle' },
+    { icon: <InsightsIcon fontSize="small" />, title: 'İstatistikler' },
+    { icon: <AccessAlarmSharpIcon fontSize="small" />, title: 'Takas Haberler' },
+];
 
+const iconButtonStyle = {
+    background: '#fff',
+    color: '#5c6979',
+    borderRadius: '50%',
+    p: '8px',
+    border: '1px solid #e0e0e0',
+};
+
+export default function SectionOne({ setTabValue }) {
     const [value, setValue] = useState(0);
+    const [age, setAge] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        setTabValue(newValue)
+    }
+    const handleNews = (event) => setAge(event.target.value);
+
+    const renderTabs = () => (
+        <Tabs value={value} onChange={handleChange} aria-label="tabs">
+            {tabIcons.map((tab, index) => (
+                <Tab
+                    key={index}
+                    sx={{ minWidth: 50, width: 50, p: 0 }}
+                    icon={
+                        <Tooltip arrow title={tab.title}>
+                            {tab.icon}
+                        </Tooltip>
+                    }
+                    {...{ id: `simple-tab-${index}`, 'aria-controls': `simple-tabpanel-${index}` }}
+                />
+            ))}
+        </Tabs>
+    );
+
+    const renderControls = () => {
+        if (value === 0) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <IconButton>
+                        <FormatListBulletedIcon sx={iconButtonStyle} />
+                    </IconButton>
+                    <IconButton>
+                        <Badge badgeContent={4} color="warning">
+                            <RefreshIcon sx={{ ...iconButtonStyle, background: '#67c23a', color: '#fff' }} />
+                        </Badge>
+                    </IconButton>
+                </Box>
+            );
+        }
+
+        if (value === 1 || value === 2) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <IconButton>
+                        <FormatListBulletedIcon sx={iconButtonStyle} />
+                    </IconButton>
+                    <FormControl sx={{ flex: 1, width: 90 }}>
+                        <Select
+                            value={age}
+                            onChange={handleNews}
+                            size="small"
+                            sx={{ height: 32, fontSize: '0.75rem' }}
+                        >
+                            <MenuItem value={0}>Haber</MenuItem>
+                            <MenuItem value={10}>Galeri</MenuItem>
+                            <MenuItem value={20}>Video</MenuItem>
+                            <MenuItem value={30}>Yazar</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
+            );
+        }
+        if (value === 3) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <IconButton>
+                        <FormatListBulletedIcon sx={iconButtonStyle} />
+                    </IconButton>
+                    
+                </Box>
+            );
+        }
+
+        return null;
     };
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 1, gap: 20 }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Ajans Haberleri">
-                                <ExitToAppIcon fontSize="small" />
-                            </Tooltip>
-                        } {...a11yProps(0)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Yayındaki Haberler">
-                                <PodcastsIcon fontSize="small" />
-                            </Tooltip>
-                        } {...a11yProps(1)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Benim Haberlerim">
-                                <PersonIcon fontSize="small" />
-                            </Tooltip>
-                        }  {...a11yProps(2)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Haberleri Sıralama">
-                                <FormatListNumberedIcon fontSize="small" />
-                            </Tooltip>
-                        }  {...a11yProps(3)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Fotoğraf Yükle">
-                                <CameraAltIcon fontSize="small" />
-                            </Tooltip>
-                        }  {...a11yProps(4)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Video veya Mp3 Yükle">
-                                <VideocamIcon fontSize="small" />
-                            </Tooltip>
-                        }  {...a11yProps(5)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="İstatistikler">
-                                <InsightsIcon fontSize="small" />
-                            </Tooltip>
-                        }  {...a11yProps(6)} />
-                        <Tab sx={{ minWidth: 50, width: 50, padding: 0 }} label={
-                            <Tooltip arrow title="Takas Haberler">
-                                <AccessAlarmSharpIcon fontSize="small" />
-                            </Tooltip>
-                        }  {...a11yProps(7)} />
-                    </Tabs>
-                </Box>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 2,
-                    padding: 1
-                }}>
-                    <IconButton>
-                        <FormatListBulletedIcon fontSize="small" sx={{ background: "#fff", color: "#5c6979", borderRadius: "100%", padding: "8px", border: "1px solid #e0e0e0" }} />
-                    </IconButton>
-                    <IconButton>
-                        <Badge badgeContent={4} color="warning">
-                            <RefreshIcon fontSize="small" sx={{ background: "#67c23a", color: "#fff", borderRadius: "100%", padding: "8px" }} />
-                        </Badge>
-                    </IconButton>
-
-                </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, gap: 2 }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>{renderTabs()}</Box>
+                {renderControls()}
             </Box>
 
             <CustomTabPanel value={value} index={0}>
                 <AgencyNews />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
+                <OnAirNews />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                Item Three
+                <MyNews />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-                Item Four
+                <SortingNews />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={4}>
-                Item Five
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={5}>
-                Item Six
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={6}>
-                Item Seven
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={7}>
-                Item Eight
-            </CustomTabPanel>
+            {[4, 5, 6, 7].map((index) => (
+                <CustomTabPanel key={index} value={value} index={index}>
+                    Item {index + 1}
+                </CustomTabPanel>
+            ))}
         </Box>
     );
 }

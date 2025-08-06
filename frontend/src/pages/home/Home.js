@@ -4,27 +4,28 @@ import { Grid } from '@mui/material';
 import SectionTwo from './SectionTwo';
 import SectionThree from './SectionThree';
 import SectionOne from './SectionOne/SectionOne';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+    const [tabValue, setTabValue] = useState(0);
     //   const { selectedBrand } = useSelectedBrand();
     // console.log("Selected Brand:", selectedBrand);
 
+    useEffect(() => {
+      console.log("tabValue",tabValue)
+    }, [tabValue]);
+
     return (
-        <Grid
-            container
-            direction="row"
-            sx={{
-                justifyContent: "space-between",
-                alignItems: "stretch",
-            }}
-        >
-            <Grid item xs={4}>
-                <SectionOne />
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
+            <Grid item size={tabValue === 3 ? 8 : 4}>
+                <SectionOne setTabValue={setTabValue} />
             </Grid>
-            <Grid item xs={4}>
-                <SectionTwo />
-            </Grid>
-            <Grid item xs={4}>
+            {tabValue !== 3 && (
+                <Grid item size={4}>
+                    <SectionTwo />
+                </Grid>
+            )}
+            <Grid item size={4}>
                 <SectionThree />
             </Grid>
         </Grid>
