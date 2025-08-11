@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../Home.module.css';
 import {
@@ -29,6 +29,9 @@ import AgencyNews from './Tabs/AgencyNews';
 import OnAirNews from './Tabs/OnAirNews';
 import MyNews from './Tabs/MyNews';
 import SortingNews from './Tabs/SortingNews';
+import UploadPhoto from './Tabs/UploadPhoto';
+import UploadVideo from './Tabs/UploadVideo';
+import StatisticsNews from './Tabs/StatisticsNews';
 
 function CustomTabPanel({ children, value, index }) {
     return (
@@ -68,18 +71,20 @@ const iconButtonStyle = {
     border: '1px solid #e0e0e0',
 };
 
-export default function SectionOne({ setTabValue }) {
-    const [value, setValue] = useState(0);
+export default function SectionOne({ tabValue, setTabValue }) {
     const [age, setAge] = useState(0);
+    const [residentiai, setResidentia] = useState(0);
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
         setTabValue(newValue)
     }
     const handleNews = (event) => setAge(event.target.value);
+    const residentialArea = (event) => setResidentia(event);
+
+
 
     const renderTabs = () => (
-        <Tabs value={value} onChange={handleChange} aria-label="tabs">
+        <Tabs value={tabValue} onChange={handleChange} aria-label="tabs">
             {tabIcons.map((tab, index) => (
                 <Tab
                     key={index}
@@ -96,7 +101,7 @@ export default function SectionOne({ setTabValue }) {
     );
 
     const renderControls = () => {
-        if (value === 0) {
+        if (tabValue === 0) {
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton>
@@ -111,7 +116,7 @@ export default function SectionOne({ setTabValue }) {
             );
         }
 
-        if (value === 1 || value === 2) {
+        if (tabValue === 1 || tabValue === 2) {
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <IconButton>
@@ -133,17 +138,49 @@ export default function SectionOne({ setTabValue }) {
                 </Box>
             );
         }
-        if (value === 3) {
+        if (tabValue === 3 || tabValue === 4) {
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <IconButton>
                         <FormatListBulletedIcon sx={iconButtonStyle} />
                     </IconButton>
-                    
+
                 </Box>
             );
         }
-
+        if (tabValue === 6) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <FormControl sx={{ flex: 1, width: 90 }}>
+                        <Select
+                            value={age}
+                            onChange={residentialArea}
+                            size="small"
+                            sx={{ height: 32, fontSize: '0.75rem' }}
+                        >
+                            <MenuItem value={0}>Tümü</MenuItem>
+                            <MenuItem value={10}>Sür Manşet Yanı</MenuItem>
+                            <MenuItem value={20}>Manşet Üstü 3'lü</MenuItem>
+                            <MenuItem value={30}>Manşet</MenuItem>
+                            <MenuItem value={40}>Sür Manşet</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ flex: 1, width: 90 }}>
+                        <Select
+                            value={age}
+                            onChange={handleNews}
+                            size="small"
+                            sx={{ height: 32, fontSize: '0.75rem' }}
+                        >
+                            <MenuItem value={0}>Haber</MenuItem>
+                            <MenuItem value={10}>Galeri</MenuItem>
+                            <MenuItem value={20}>Video</MenuItem>
+                            <MenuItem value={30}>Yazar</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
+            );
+        }
         return null;
     };
 
@@ -153,22 +190,30 @@ export default function SectionOne({ setTabValue }) {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>{renderTabs()}</Box>
                 {renderControls()}
             </Box>
-
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tabValue} index={0}>
                 <AgencyNews />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                <OnAirNews />
+            <CustomTabPanel value={tabValue} index={1}>
+                <OnAirNews setTabValue={setTabValue} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                <MyNews />
+            <CustomTabPanel value={tabValue} index={2}>
+                <MyNews setTabValue={setTabValue}/>
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
-                <SortingNews />
+            <CustomTabPanel value={tabValue} index={3}>
+                <SortingNews/>
             </CustomTabPanel>
-            {[4, 5, 6, 7].map((index) => (
-                <CustomTabPanel key={index} value={value} index={index}>
-                    Item {index + 1}
+            <CustomTabPanel value={tabValue} index={4}>
+                <UploadPhoto />
+            </CustomTabPanel>
+            <CustomTabPanel value={tabValue} index={5}>
+                <UploadVideo />
+            </CustomTabPanel>
+            <CustomTabPanel value={tabValue} index={6}>
+                <StatisticsNews setTabValue={setTabValue}/>
+            </CustomTabPanel>
+            {[7].map((index) => (
+                <CustomTabPanel key={index} value={tabValue} index={index}>
+                    Sonuç bulunamadı
                 </CustomTabPanel>
             ))}
         </Box>

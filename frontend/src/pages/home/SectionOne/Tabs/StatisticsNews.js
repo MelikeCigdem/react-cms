@@ -8,7 +8,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import { useState } from 'react';
 
-export default function MyNews({ setTabValue }) {
+export default function StatisticsNews({ setTabValue }) {
        const [hoveredIndex, setHoveredIndex] = useState(null);
        const sorting = () => {
               setTabValue(3)
@@ -49,7 +49,8 @@ export default function MyNews({ setTabValue }) {
                                                                paddingX: 0.5
                                                         }}
                                                  >
-                                                        <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>IHA Haber</Typography>
+                                                        <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>176 / 14471</Typography>
+                                                        <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>1</Typography>
                                                         {hoveredIndex === index ?
                                                                <Box display={'flex'}>
                                                                       <Typography variant="caption" mr={1} gutterBottom sx={{ display: 'block', fontSize: "11px" }}>1591652</Typography>
@@ -58,13 +59,13 @@ export default function MyNews({ setTabValue }) {
                                                                       </a>
                                                                       <ReorderIcon sx={{ fontSize: "14px" }} onClick={sorting} />
                                                                </Box>
-                                                               : <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>GÜNCEL</Typography>}
+                                                               : <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>PUSULA</Typography>}
                                                  </Box>
 
                                                  <CardMedia
                                                         component="img"
                                                         height="110"
-                                                        image="https://img3.aksam.com.tr/imgsdisk/2025/08/06/t3_besiktasin-st-patricks-ma-891.jpg"
+                                                        image="https://img3.aksam.com.tr/imgsdisk/2025/08/08/hos-geldin-sacha-boey-eze-509_2.jpg"
                                                         alt="Paella dish"
                                                  />
                                                  <CardContent sx={{ px: 1, py: 1 }}>

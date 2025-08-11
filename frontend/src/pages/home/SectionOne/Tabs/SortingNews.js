@@ -8,6 +8,8 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { MenuItem, Select, FormControl, } from '@mui/material';
 import Button from '@mui/material/Button';
+import LinkIcon from '@mui/icons-material/Link';
+import ReorderIcon from '@mui/icons-material/Reorder';
 
 const iconButtonStyle = {
        background: '#fff',
@@ -18,10 +20,12 @@ const iconButtonStyle = {
 };
 export default function SortingNews() {
        const [age, setAge] = useState(0);
+       const [hoveredIndex, setHoveredIndex] = useState(null);
        const handleNews = (event) => setAge(event.target.value);
+ 
        return (
               <>
-                     <Box sx={{ display: 'flex', gap: 1, justifyContent: "space-between", mb:3 }}>
+                     <Box sx={{ display: 'flex', gap: 1, justifyContent: "space-between", mb: 3 }}>
                             <FormControl sx={{ width: 200 }}>
                                    <Select
                                           value={age}
@@ -70,7 +74,7 @@ export default function SortingNews() {
                                                         lg: 2,
                                                  }}
                                           >
-                                                 <Card>
+                                                 <Card onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
                                                         <Box
                                                                sx={{
                                                                       display: 'flex',
@@ -81,7 +85,14 @@ export default function SortingNews() {
                                                                }}
                                                         >
                                                                <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>IHA Haber</Typography>
-                                                               <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>GÜNCEL</Typography>
+                                                               {hoveredIndex === index ?
+                                                                      <Box display={'flex'}>
+                                                                             <Typography variant="caption" mr={1} gutterBottom sx={{ display: 'block', fontSize: "11px" }}>1591652</Typography>
+                                                                             <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                                                                                    <LinkIcon sx={{ mr: 1, fontSize: "16px", color: '#0667d0', cursor: 'pointer' }} />
+                                                                             </a>
+                                                                      </Box>
+                                                                      : <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>GÜNCEL</Typography>}
                                                         </Box>
 
                                                         <CardMedia

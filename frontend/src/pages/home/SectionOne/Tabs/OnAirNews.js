@@ -1,12 +1,20 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import LinkIcon from '@mui/icons-material/Link';
+import ReorderIcon from '@mui/icons-material/Reorder';
 
-export default function OnAirNews() {
+
+
+export default function OnAirNews({setTabValue}) {
+       const [hoveredIndex, setHoveredIndex] = useState(null);
+       const sorting = () => {
+              setTabValue(3)
+       }
        return (
               <Box sx={{ flexGrow: 1 }}>
                      <Grid
@@ -33,7 +41,7 @@ export default function OnAirNews() {
                                                  lg: 4,
                                           }}
                                    >
-                                          <Card>
+                                          <Card onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
                                                  <Box
                                                         sx={{
                                                                display: 'flex',
@@ -43,8 +51,22 @@ export default function OnAirNews() {
                                                                paddingX: 0.5
                                                         }}
                                                  >
-                                                        <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px"  }}>IHA Haber</Typography>
-                                                        <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px"  }}>GÜNCEL</Typography>
+                                                        <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>IHA Haber</Typography>
+                                                        <Box sx={{
+                                                               cursor: "pointer",
+                                                        }}>
+                                                               {hoveredIndex === index ?
+                                                                      <Box display={'flex'}>
+                                                                             <Typography variant="caption" mr={1} gutterBottom sx={{ display: 'block', fontSize: "11px" }}>1591652</Typography>
+                                                                             <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                                                                                    <LinkIcon sx={{ mr: 1, fontSize: "16px", color: '#0667d0', cursor: 'pointer' }} />
+                                                                             </a>
+                                                                             <ReorderIcon sx={{ fontSize: "14px" }} onClick={sorting}/>
+                                                                      </Box>
+                                                                      : <Typography color='#0667d0' variant="caption" gutterBottom sx={{ display: 'block', fontWeight: 'bold', fontSize: "11px" }}>GÜNCEL</Typography>}
+
+                                                        </Box>
+
                                                  </Box>
 
                                                  <CardMedia
@@ -62,7 +84,7 @@ export default function OnAirNews() {
                                                                       display: 'flex',
                                                                       justifyContent: 'space-between',
                                                                       alignItems: 'center',
-                                                                      padding:0
+                                                                      padding: 0
                                                                }}
                                                         >
                                                                <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary', textAlign: "left", m: 0, p: 0, fontSize: "11px" }}>

@@ -20,7 +20,7 @@ export default function FilterWeb({ open, onClose }) {
 
     const filterOnSubmit = (event) => {
         event.preventDefault();
-        console.log("filterValues", filterValues)
+        // console.log("filterValues", filterValues)
         onClose();
     }
     return (

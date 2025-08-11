@@ -86,11 +86,7 @@ export default function PrimarySearchAppBar() {
         setSimpleOpen(false);
     };
 
-    useEffect(() => {
-        console.log("simpleOpen", simpleOpen);
-        
-     }, [simpleOpen])
-        
+
     // filter end
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -245,7 +241,7 @@ export default function PrimarySearchAppBar() {
                         </SearchIconWrapper>
                         <StyledInputBase
                             // sx={{ width: "400px" }}
-                            placeholder="Yayınlanmış Haberleri Ara"
+                            placeholder="Haberleri Ara"
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>

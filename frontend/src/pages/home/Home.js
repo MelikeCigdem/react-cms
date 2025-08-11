@@ -11,14 +11,12 @@ export default function Home() {
     //   const { selectedBrand } = useSelectedBrand();
     // console.log("Selected Brand:", selectedBrand);
 
-    useEffect(() => {
-      console.log("tabValue",tabValue)
-    }, [tabValue]);
+
 
     return (
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 3 }}>
             <Grid item size={tabValue === 3 ? 8 : 4}>
-                <SectionOne setTabValue={setTabValue} />
+                <SectionOne tabValue={tabValue} setTabValue={setTabValue} />
             </Grid>
             {tabValue !== 3 && (
                 <Grid item size={4}>
