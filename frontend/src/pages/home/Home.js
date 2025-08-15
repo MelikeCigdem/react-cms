@@ -19,11 +19,11 @@ export default function Home() {
                 <SectionOne tabValue={tabValue} setTabValue={setTabValue} />
             </Grid>
             {tabValue !== 3 && (
-                <Grid item size={4}>
+                <Grid item size={3}>
                     <SectionTwo />
                 </Grid>
             )}
-            <Grid item size={4}>
+            <Grid item size={5}>
                 <SectionThree />
             </Grid>
         </Grid>

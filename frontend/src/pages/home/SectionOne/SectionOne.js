@@ -84,13 +84,13 @@ export default function SectionOne({ tabValue, setTabValue }) {
 
 
     const renderTabs = () => (
-        <Tabs value={tabValue} onChange={handleChange} aria-label="tabs">
+        <Tabs value={tabValue} onChange={handleChange} aria-label="tabs" sx={{ border: "1px solid #dae1e9",height:40, minHeight:40, background:"fff", borderRadius:"4px"}}>
             {tabIcons.map((tab, index) => (
                 <Tab
                     key={index}
-                    sx={{ minWidth: 50, width: 50, p: 0 }}
+                    sx={{height:40, minHeight:40, minWidth: 40, width: 40, p: 0 ,   border: "1px solid #dae1e9", borderBottom:"unset"}}
                     icon={
-                        <Tooltip arrow title={tab.title}>
+                        <Tooltip arrow title={tab.title} >
                             {tab.icon}
                         </Tooltip>
                     }
