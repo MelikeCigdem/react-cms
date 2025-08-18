@@ -7,41 +7,41 @@ import { DndContext, useDraggable } from '@dnd-kit/core';
 import { Button, Chip, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
-// import DropZone from '../../../../components/DndKit/DndKit';
+import DropZone from '../../../../components/DndKit/DndKit';
 
 const CustomUploadButton = styled(Button)(({ theme }) => ({
-  display:'block',
-  backgroundColor: '#1976d2',
-  color: '#606266',
-  padding: '20px 20px',
-  borderRadius: '8px',
-  textTransform: 'none',
-  boxShadow: '0px 3px 6px rgba(0,0,0,0.1)',
-  transition: 'all 0.3s ease',
-  background:'#fff',
-  border: '1px dashed #d9d9d9',
-  '&:hover': {
-     border: '1px dashed #0d47a1',
-    boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
-  },
-  '&:active': {
-    border: '1px dashed #0d47a1',
-    transform: 'scale(0.98)',
-  },
-  width:'100%',
-  height:'120px',
+       display: 'block',
+       backgroundColor: '#1976d2',
+       color: '#606266',
+       padding: '20px 20px',
+       borderRadius: '8px',
+       textTransform: 'none',
+       boxShadow: '0px 3px 6px rgba(0,0,0,0.1)',
+       transition: 'all 0.3s ease',
+       background: '#fff',
+       border: '1px dashed #d9d9d9',
+       '&:hover': {
+              border: '1px dashed #0d47a1',
+              boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
+       },
+       '&:active': {
+              border: '1px dashed #0d47a1',
+              transform: 'scale(0.98)',
+       },
+       width: '100%',
+       height: '120px',
 }));
 
 const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
+       clip: 'rect(0 0 0 0)',
+       clipPath: 'inset(50%)',
+       height: 1,
+       overflow: 'hidden',
+       position: 'absolute',
+       bottom: 0,
+       left: 0,
+       whiteSpace: 'nowrap',
+       width: 1,
 });
 
 export default function UploadPhoto() {
@@ -94,10 +94,10 @@ export default function UploadPhoto() {
                                    component="label"
                                    role={undefined}
                                    tabIndex={-1}
-                                   startIcon={<CloudUploadIcon  color='primary' sx={{ width: '40px', height: '40px' }}/>}
+                                   startIcon={<CloudUploadIcon color='primary' sx={{ width: '40px', height: '40px' }} />}
                             >
-                                   <Typography display={'flex'} sx={{fontSize: "13px", justifyContent:'center'}}>Dosyaları buraya sürükleyiniz veya  <Typography  variant="caption" sx={{ display: 'block', color: '#0667D0',ml:0.5,  fontSize: "13px" }}> yüklemek için tıklayınız</Typography></Typography>
-                                   
+                                   <Typography display={'flex'} sx={{ fontSize: "13px", justifyContent: 'center' }}>Dosyaları buraya sürükleyiniz veya  <Typography variant="caption" sx={{ display: 'block', color: '#0667D0', ml: 0.5, fontSize: "13px" }}> yüklemek için tıklayınız</Typography></Typography>
+
                                    <VisuallyHiddenInput
                                           type="file"
                                           accept="image/jpeg"
@@ -107,7 +107,7 @@ export default function UploadPhoto() {
                             </CustomUploadButton>
                      </Box>
                      <DndContext onDragEnd={handleDragEnd}>
-                            <Typography sx={{ display: 'flex', color: '#0667D0', fontWeight:'bold', justifyContent:'left', mb:2 }}>FOTOĞRAFLAR</Typography>
+                            <Typography sx={{ display: 'flex', color: '#0667D0', fontWeight: 'bold', justifyContent: 'left', mb: 2 }}>FOTOĞRAFLAR</Typography>
                             <Box sx={{ flexGrow: 1 }}>
                                    <Grid
                                           className="deneme1"
@@ -127,8 +127,13 @@ export default function UploadPhoto() {
                                           ))}
                                    </Grid>
                             </Box>
-                            {/* Dışa Bırakılabilir Alan */}
-                            {/* <DropZone id="drop-zone" items={droppedItems} /> */}
+                            {/* Dışa Bırakılabilir Alan
+                            <DropZone id="drop-zone" items={droppedItems} /> */}
+                            <DropZone
+                                   id="drop-zone"
+                                   items={droppedItems}
+                                   setItems={setDroppedItems}
+                            />
                      </DndContext>
               </Box>
 

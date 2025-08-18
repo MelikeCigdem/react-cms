@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm, Controller, Form } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl, Grid, TextareaAutosize, FormControlLabel, Switch, FormGroup, Chip, Alert, Snackbar } from "@mui/material";
+import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl, Grid, TextareaAutosize, FormControlLabel, Switch, FormGroup, Chip, Alert, Snackbar, Typography } from "@mui/material";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -11,9 +11,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import WarningAmberIcon from "@mui/icons-material/WarningAmber"; // Uyarı ikonu
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import DropZone from "../DndKit/DndKit";
 
 
 
@@ -24,6 +25,7 @@ const schema = yup.object({
        // password: yup.string().min(6, "Şifre en az 6 karakter olmalı").required("Şifre zorunlu"),
        // role: yup.string().required("Rol seçmek zorunlu")
 });
+
 
 export default function MUIForm() {
        const [open, setOpen] = useState(false);
@@ -59,6 +61,7 @@ export default function MUIForm() {
                      category: "",
                      property: "",
                      status: "",
+                     image2Source: "",
               }
        });
        const shareValue = watch("shareSwitch");
@@ -677,6 +680,11 @@ export default function MUIForm() {
                             </Grid>
                      }
 
+                     {/* Dışa Bırakılabilir Alan */}
+                     <DropZone id="drop-zone"
+                            items={watch("image2Source") || []}
+                            setValue={setValue} />
+
                      {/* Submit */}
                      <Button type="submit" variant="contained" color="primary">
                             Gönder
@@ -684,3 +692,4 @@ export default function MUIForm() {
               </Box>
        );
 }
+
