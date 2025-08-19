@@ -5,18 +5,20 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useEffect, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
+import { useDndKit } from "../../context/DndProvider";
 
-export default function DropZone({ id, items, setValue }) {
+
+export default function DropZone({ id, items, setValue, children }) {
+       const { isOver, setNodeRef } = useDroppable({ id });
+       const { dropped, clearZone } = useDndKit();
        const [image, setImage] = useState(null);
        const fileInputRef = useRef(null);
-       console.log("items", items)
-       // resimin sürüklenip geldiği yer
 
-       const { isOver, setNodeRef } = useDroppable({ id });
+       const zoneItems = dropped[id] ?? [];
 
        const removeImage = () => {
               setImage(null);
-              setValue("image2Source", []);
+              clearZone(id);
               if (fileInputRef.current) fileInputRef.current.value = null;
        };
 
@@ -33,12 +35,12 @@ export default function DropZone({ id, items, setValue }) {
               const jpegFiles = files.filter(file => file.type === 'image/jpeg');
               if (jpegFiles.length === 0) return;
 
-              const file = jpegFiles[jpegFiles.length - 1]; // sadece son seçilen
+              const file = jpegFiles[jpegFiles.length - 1]; 
               const reader = new FileReader();
               reader.onload = (e) => {
                      const imgObj = { img: e.target.result, title: file.name };
                      setImage(imgObj);
-                     setValue("image2Source", [imgObj]);
+                     // setValue("image2Source", [imgObj]);
                      if (fileInputRef.current) fileInputRef.current.value = null;
               };
               reader.readAsDataURL(file);
@@ -54,11 +56,12 @@ export default function DropZone({ id, items, setValue }) {
                             setTimeout(() => URL.revokeObjectURL(url), 1000);
                      });
        };
+
        useEffect(() => {
-              if (items && items.length > 0) {
-                     setImage(items[0]);
+              if (zoneItems && zoneItems.length > 0) {
+                     setImage(zoneItems[zoneItems.length - 1]);
               }
-       }, [items]);
+       }, [zoneItems]);
 
        return (
               <Box ref={setNodeRef} sx={{ mb: 3, display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", backgroundColor: isOver ? '#f0f0f0' : '#fafafa', }}>
@@ -78,11 +81,13 @@ export default function DropZone({ id, items, setValue }) {
                             onDrop={handleDrop}
                             onDragOver={handleDragOver}
                      >
+                            <div style={{ marginBottom: 8 }}>{children}</div>
                             {image ? (
+
                                    <>
                                           <img
-                                                 src={image.img}
-                                                 alt={image.title}
+                                                 src={image?.img}
+                                                 alt={image?.title}
                                                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                                           />
                                           <Box
