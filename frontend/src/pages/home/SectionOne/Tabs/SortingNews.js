@@ -51,7 +51,6 @@ export default function SortingNews() {
                      </Box>
                      <Box sx={{ flexGrow: 1 }}>
                             <Grid
-                                   className="deneme1"
                                    container
                                    spacing={1}
                                    sx={{

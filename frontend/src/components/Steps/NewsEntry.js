@@ -680,10 +680,27 @@ export default function MUIForm() {
                             </Grid>
                      }
 
-                     {/* Dışa Bırakılabilir Alan */}
-                     <DropZone id="drop-zone"
-                            items={watch("image2Source") || []}
-                            setValue={setValue} />
+                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+                            {/* Dışa Bırakılabilir Alan image2Source */}
+                            <Grid size={6}>
+                                   <DropZone id="detay"
+                                          items={watch("image2Source") || []}
+                                          setValue={setValue}
+                                          title={"Detay fotoğrafını sürükle bırak"}
+                                          fieldName="image2Source"
+                                   />
+                            </Grid>
+                            <Grid size={6}>
+                                   <DropZone id="manset"
+                                          items={watch("image2Source") || []}
+                                          setValue={setValue}
+                                          title={"Manşet fotoğrafını sürükle bırak"}
+                                          fieldName="image1Source"
+                                   />
+                            </Grid>
+                     </Grid>
+                     
+
 
                      {/* Submit */}
                      <Button type="submit" variant="contained" color="primary">

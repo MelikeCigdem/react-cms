@@ -95,7 +95,6 @@ export default function UploadPhoto() {
                      <Typography sx={{ display: 'flex', color: '#0667D0', fontWeight: 'bold', justifyContent: 'left', mb: 2 }}>FOTOĞRAFLAR</Typography>
                      <Box sx={{ flexGrow: 1 }}>
                             <Grid
-                                   className="deneme1"
                                    container
                                    spacing={1}
                                    sx={{

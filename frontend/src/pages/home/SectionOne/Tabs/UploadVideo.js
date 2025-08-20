@@ -94,7 +94,6 @@ export default function UploadVideo() {
                             <Typography sx={{ display: 'flex', color: '#0667D0', fontWeight: 'bold', justifyContent: 'left', mb: 2 }}>VIDEO, MP3</Typography>
                             <Box sx={{ flexGrow: 1 }}>
                                    <Grid
-                                          className="deneme1"
                                           container
                                           spacing={1}
                                           sx={{

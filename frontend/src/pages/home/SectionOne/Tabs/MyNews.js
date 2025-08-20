@@ -16,7 +16,6 @@ export default function MyNews({ setTabValue }) {
        return (
               <Box sx={{ flexGrow: 1 }}>
                      <Grid
-                            className="deneme1"
                             container
                             spacing={1}
                             sx={{
