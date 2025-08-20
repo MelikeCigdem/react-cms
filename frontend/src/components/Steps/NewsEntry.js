@@ -83,7 +83,7 @@ export default function MUIForm() {
        const relatedValue = watch("relatedSwitch");
        const urlValue = watch("urlSwitch")
        const spotValue = watch("spot");
-       const contentListValue = watch("contentList")
+       const contentListValue = watch("contentList");
 
 
        const onSubmit = (data) => {
@@ -119,26 +119,7 @@ export default function MUIForm() {
               setShowAlert(false);
        };
 
-       // Ekleme (alttaki input'tan)
-       const handleAdd = () => {
-              if (inputValue.trim() !== "") {
-                     setValue("contentList", [...items, inputValue]);
-                     setInputValue("");
-              }
-       };
-
-       // Silme
-       const handleDelete = (index) => {
-              const newItems = items.filter((_, i) => i !== index);
-              setValue("contentList", newItems);
-       };
-
-       // Boş div ekleme (üstüne ekle)
-       const handleInsert = (index) => {
-              const newItems = [...items];
-              newItems.splice(index, 0, "");
-              setValue("contentList", newItems);
-       };
+     
        return (
 
               <Box
@@ -736,9 +717,10 @@ export default function MUIForm() {
 
                      <Card variant="outlined" sx={{ borderRadius: 2 }}>
                             <CardContent>
-                                   {/* Üst kısım: contentList'ten gelen div listesi */}
+                                   {/* Droggable olacak yer */}
+                                   {/* Üst kısım: contentList'ten gelen div listesi  */}
                                    <Box sx={{ mb: 2, minHeight: "6rem", bgcolor: "#f7fafd" }}>
-                                          {watch("contentList")?.map((item, index) => (
+                                          {contentListValue?.map((item, index) => (
                                                  <Box
                                                         key={index}
                                                         sx={{
@@ -770,11 +752,10 @@ export default function MUIForm() {
                                                                <InputBase
                                                                       value={item}
                                                                       onChange={(e) => {
-                                                                             const newItems = [...watch("contentList")];
+                                                                             const newItems = [...contentListValue];
                                                                              newItems[index] = e.target.value;
                                                                              setValue("contentList", newItems);
                                                                       }}
-                                                                      placeholder="Boş içerik..."
                                                                       sx={{ flex: 1, mr: 1 }}
                                                                />
                                                         </Box>
@@ -794,7 +775,7 @@ export default function MUIForm() {
                                                                       size="small"
                                                                       color="primary"
                                                                       onClick={() => {
-                                                                             const newItems = [...watch("contentList")];
+                                                                             const newItems = [...contentListValue];
                                                                              newItems.splice(index, 0, "");
                                                                              setValue("contentList", newItems);
                                                                       }}
@@ -806,7 +787,7 @@ export default function MUIForm() {
                                                                       size="small"
                                                                       style={{ color: "red" }}
                                                                       onClick={() => {
-                                                                             const newItems = watch("contentList").filter(
+                                                                             const newItems = contentListValue.filter(
                                                                                     (_, i) => i !== index
                                                                              );
                                                                              setValue("contentList", newItems);
@@ -838,7 +819,7 @@ export default function MUIForm() {
                                                  sx={{ color: "primary.main" }}
                                                  onClick={() => {
                                                         if (inputValue.trim() !== "") {
-                                                               setValue("contentList", [...watch("contentList"), inputValue]);
+                                                               setValue("contentList", [...contentListValue, inputValue]);
                                                                setInputValue("");
                                                         }
                                                  }}
@@ -863,7 +844,7 @@ export default function MUIForm() {
                                    {/* Karakter sayısı */}
                                    <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1, gap: 2 }}>
                                           <Typography variant="body2" color="text.secondary">
-                                                 Toplam karakter sayısı: {watch("contentList")?.join("").length || 0}
+                                                 Toplam karakter sayısı: {contentListValue?.join("").length || 0}
                                           </Typography>
                                    </Box>
                             </CardContent>
