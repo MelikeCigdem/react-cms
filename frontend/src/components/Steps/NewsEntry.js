@@ -2,7 +2,12 @@ import { useRef, useState } from "react";
 import { useForm, Controller, Form } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl, Grid, TextareaAutosize, FormControlLabel, Switch, FormGroup, Chip, Alert, Snackbar, Typography } from "@mui/material";
+import {
+       TextField, Button, Box, MenuItem, Select, InputLabel, FormControl, Grid, FormControlLabel, Switch, FormGroup, Chip, Alert, Snackbar, Typography, Card,
+       CardContent,
+       IconButton,
+       InputBase,
+} from "@mui/material";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -15,6 +20,10 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DropZone from "../DndKit/DndKit";
+import AddIcon from "@mui/icons-material/Add";
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import CloseIcon from '@mui/icons-material/Close';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 
 
@@ -30,6 +39,8 @@ const schema = yup.object({
 export default function MUIForm() {
        const [open, setOpen] = useState(false);
        const [showAlert, setShowAlert] = useState(false);
+       const [items, setItems] = useState([]);
+       const [inputValue, setInputValue] = useState("");
        const { control, handleSubmit, watch, setValue, formState: { errors } } = useForm({
               resolver: yupResolver(schema),
               defaultValues: {
@@ -62,6 +73,8 @@ export default function MUIForm() {
                      property: "",
                      status: "",
                      image2Source: "",
+                     image1Source: "",
+                     contentList: []
               }
        });
        const shareValue = watch("shareSwitch");
@@ -69,7 +82,8 @@ export default function MUIForm() {
        const dateValue = watch("dateSwitch");
        const relatedValue = watch("relatedSwitch");
        const urlValue = watch("urlSwitch")
-       const spotValue = watch("spot")
+       const spotValue = watch("spot");
+       const contentListValue = watch("contentList")
 
 
        const onSubmit = (data) => {
@@ -105,6 +119,26 @@ export default function MUIForm() {
               setShowAlert(false);
        };
 
+       // Ekleme (alttaki input'tan)
+       const handleAdd = () => {
+              if (inputValue.trim() !== "") {
+                     setValue("contentList", [...items, inputValue]);
+                     setInputValue("");
+              }
+       };
+
+       // Silme
+       const handleDelete = (index) => {
+              const newItems = items.filter((_, i) => i !== index);
+              setValue("contentList", newItems);
+       };
+
+       // Boş div ekleme (üstüne ekle)
+       const handleInsert = (index) => {
+              const newItems = [...items];
+              newItems.splice(index, 0, "");
+              setValue("contentList", newItems);
+       };
        return (
 
               <Box
@@ -699,7 +733,142 @@ export default function MUIForm() {
                                    />
                             </Grid>
                      </Grid>
-                     
+
+                     <Card variant="outlined" sx={{ borderRadius: 2 }}>
+                            <CardContent>
+                                   {/* Üst kısım: contentList'ten gelen div listesi */}
+                                   <Box sx={{ mb: 2, minHeight: "6rem", bgcolor: "#f7fafd" }}>
+                                          {watch("contentList")?.map((item, index) => (
+                                                 <Box
+                                                        key={index}
+                                                        sx={{
+                                                               display: "flex",
+                                                               justifyContent: "space-between",
+                                                               alignItems: "center",
+                                                               mb: 1,
+                                                               bgcolor: "#f7fafd",
+                                                               borderRadius: 1,
+                                                               wordBreak: "break-word",
+                                                               transition: "all 0.2s ease",
+                                                               "&:hover": {
+                                                                      bgcolor: "#f0f0f0", 
+                                                                      boxShadow: "0 2px 6px rgba(0,0,0,0.08)", 
+                                                                      "& .item-actions": {
+                                                                             opacity: 1,
+                                                                             visibility: "visible",
+                                                                      },
+                                                               },
+                                                        }}
+                                                 >
+                                                        {/* Düzenlenebilir input */}
+                                                        <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.2 }}>
+                                                               <DragIndicatorIcon
+                                                                      fontSize="small"
+                                                                      color="primary"
+                                                                      style={{ marginTop: "6px" }}
+                                                               />
+                                                               <InputBase
+                                                                      value={item}
+                                                                      onChange={(e) => {
+                                                                             const newItems = [...watch("contentList")];
+                                                                             newItems[index] = e.target.value;
+                                                                             setValue("contentList", newItems);
+                                                                      }}
+                                                                      placeholder="Boş içerik..."
+                                                                      sx={{ flex: 1, mr: 1 }}
+                                                               />
+                                                        </Box>
+
+                                                        {/* Hover'da çıkan butonlar */}
+                                                        <Box
+                                                               className="item-actions"
+                                                               sx={{
+                                                                      display: "flex",
+                                                                      gap: 0.5,
+                                                                      opacity: 0,
+                                                                      visibility: "hidden",
+                                                                      transition: "opacity 0.2s ease",
+                                                               }}
+                                                        >
+                                                               <IconButton
+                                                                      size="small"
+                                                                      color="primary"
+                                                                      onClick={() => {
+                                                                             const newItems = [...watch("contentList")];
+                                                                             newItems.splice(index, 0, "");
+                                                                             setValue("contentList", newItems);
+                                                                      }}
+                                                               >
+                                                                      <AddIcon fontSize="small" />
+                                                               </IconButton>
+
+                                                               <IconButton
+                                                                      size="small"
+                                                                      style={{ color: "red" }}
+                                                                      onClick={() => {
+                                                                             const newItems = watch("contentList").filter(
+                                                                                    (_, i) => i !== index
+                                                                             );
+                                                                             setValue("contentList", newItems);
+                                                                      }}
+                                                               >
+                                                                      <CloseIcon fontSize="small" />
+                                                               </IconButton>
+                                                        </Box>
+                                                 </Box>
+                                          ))}
+                                   </Box>
+
+                                   <Box sx={{ borderBottom: "1px solid #cfd8dc", my: 2 }} />
+
+                                   {/* Alt kısım: yeni item ekleme */}
+                                   <Box
+                                          sx={{
+                                                 display: "flex",
+                                                 alignItems: "center",
+                                                 bgcolor: "#fafafa",
+                                                 borderRadius: 1,
+                                                 px: 1,
+                                                 py: 0.5,
+                                          }}
+                                   >
+                                          {/* Artı butonu */}
+                                          <IconButton
+                                                 size="small"
+                                                 sx={{ color: "primary.main" }}
+                                                 onClick={() => {
+                                                        if (inputValue.trim() !== "") {
+                                                               setValue("contentList", [...watch("contentList"), inputValue]);
+                                                               setInputValue("");
+                                                        }
+                                                 }}
+                                          >
+                                                 <AddIcon />
+                                          </IconButton>
+
+                                          {/* Input alanı */}
+                                          <InputBase
+                                                 placeholder="İçerik girin"
+                                                 value={inputValue}
+                                                 onChange={(e) => setInputValue(e.target.value)}
+                                                 sx={{ flex: 1, ml: 1, fontStyle: "italic", color: "#424242" }}
+                                          />
+
+                                          {/* Video ikonu */}
+                                          <IconButton size="small" color="primary">
+                                                 <OndemandVideoIcon />
+                                          </IconButton>
+                                   </Box>
+
+                                   {/* Karakter sayısı */}
+                                   <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1, gap: 2 }}>
+                                          <Typography variant="body2" color="text.secondary">
+                                                 Toplam karakter sayısı: {watch("contentList")?.join("").length || 0}
+                                          </Typography>
+                                   </Box>
+                            </CardContent>
+                     </Card>
+
 
 
                      {/* Submit */}
